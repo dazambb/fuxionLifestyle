@@ -1,0 +1,87 @@
+<!-- 404 Error Page -->
+<section class="error-page" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin-top: 76px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="error-content text-white" data-aos="fade-up">
+                    <!-- Error Icon -->
+                    <div class="error-icon mb-4">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 8rem; opacity: 0.9;"></i>
+                    </div>
+                    
+                    <!-- Error Code -->
+                    <h1 class="display-1 fw-bold mb-3" style="font-size: 8rem;">404</h1>
+                    
+                    <!-- Error Message -->
+                    <h2 class="h3 mb-4"><%= message || 'Página no encontrada' %></h2>
+                    <p class="lead mb-5">
+                        Lo sentimos, la página que estás buscando no existe o ha sido movida.
+                    </p>
+                    
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="/" class="btn btn-light btn-lg px-5">
+                            <i class="fas fa-home me-2"></i> Ir al Inicio
+                        </a>
+                        <a href="/productos" class="btn btn-outline-light btn-lg px-5">
+                            <i class="fas fa-shopping-bag me-2"></i> Ver Productos
+                        </a>
+                        <a href="/blog" class="btn btn-outline-light btn-lg px-5">
+                            <i class="fas fa-newspaper me-2"></i> Ver Blog
+                        </a>
+                    </div>
+                    
+                    <!-- Search Suggestion -->
+                    <div class="mt-5 pt-4" data-aos="fade-up" data-aos-delay="200">
+                        <p class="mb-3 opacity-75">¿Necesitas ayuda? Contáctanos:</p>
+                        <a href="https://wa.me/593993161517?text=Hola,%20necesito%20ayuda" 
+                           class="btn btn-success btn-lg"
+                           target="_blank">
+                            <i class="fab fa-whatsapp me-2"></i> Contactar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.error-page {
+    position: relative;
+    overflow: hidden;
+}
+
+.error-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.error-icon {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+.error-content {
+    position: relative;
+    z-index: 1;
+}
+</style>

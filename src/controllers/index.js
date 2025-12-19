@@ -91,24 +91,33 @@ const blog = async (req, res) => {
 
 const blogDetail = async (req, res) => {
   try {
-    const blogId = req.params.id;
+    const blogSlug = req.params.slug;
     
     // Obtener el post de la base de datos
-    const query = 'SELECT * FROM blog_posts WHERE id = ? AND published = 1';
-    connection.query(query, [blogId], (error, results) => {
-      if (error || results.length === 0) {
-        console.error(error);
-        return res.status(404).send('Artículo no encontrado');
+    const query = 'SELECT * FROM blog_posts WHERE slug = ? AND published = 1';
+    connection.query(query, [blogSlug], (error, results) => {
+      if (error) {
+        console.error('Error al buscar blog:', error);
+        return res.status(500).render('500', {
+          title: 'Error del Servidor - FuXion Lifestyle'
+        });
+      }
+      
+      if (results.length === 0) {
+        return res.status(404).render('404', {
+          title: 'Artículo no encontrado - FuXion Lifestyle',
+          message: 'El artículo que buscas no existe o ha sido eliminado'
+        });
       }
       
       const post = results[0];
       
       // Incrementar contador de vistas
-      connection.query('UPDATE blog_posts SET views = views + 1 WHERE id = ?', [blogId]);
+      connection.query('UPDATE blog_posts SET views = views + 1 WHERE id = ?', [post.id]);
       
       // Obtener posts relacionados
       const relatedQuery = 'SELECT * FROM blog_posts WHERE published = 1 AND id != ? ORDER BY created_at DESC LIMIT 3';
-      connection.query(relatedQuery, [blogId], (err, relatedPosts) => {
+      connection.query(relatedQuery, [post.id], (err, relatedPosts) => {
         res.render("blog-detail", {
           title: post.title + " - FuXion Lifestyle",
           post: post,
@@ -117,9 +126,9 @@ const blogDetail = async (req, res) => {
       });
     });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      error: error,
+    console.error('Error en blogDetail:', error);
+    return res.status(500).render('500', {
+      title: 'Error del Servidor - FuXion Lifestyle'
     });
   }
 };

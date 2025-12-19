@@ -77,6 +77,25 @@ app.use((req, res, next) => {
 })
 
 app.use(router.router)
+
+// Middleware para manejar rutas no encontradas (404)
+app.use((req, res, next) => {
+    res.status(404).render('404', {
+        title: 'Página no encontrada - FuXion Lifestyle',
+        message: 'La página que buscas no existe',
+        layout: 'layout'
+    });
+});
+
+// Middleware para manejar errores del servidor (500)
+app.use((err, req, res, next) => {
+    console.error('Error del servidor:', err);
+    res.status(500).render('500', {
+        title: 'Error del Servidor - FuXion Lifestyle',
+        layout: 'layout'
+    });
+});
+
 app.set('port', config.port)
 
 app.listen(config.port, () => {
