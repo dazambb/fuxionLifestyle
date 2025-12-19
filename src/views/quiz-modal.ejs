@@ -1,0 +1,229 @@
+<!-- Quiz Modal Pop-up -->
+<div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header border-0 bg-gradient-primary text-white" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);">
+                <div>
+                    <h4 class="modal-title fw-bold mb-1" id="quizModalLabel">
+                        <i class="fas fa-gift"></i> ¡Descubre tu Producto Ideal!
+                    </h4>
+                    <p class="mb-0 small opacity-90">Quiz personalizado en solo 2 minutos</p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="text-center mb-4">
+                    <div class="quiz-modal-icon mb-3">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h5 class="mb-3">¿No sabes qué producto elegir?</h5>
+                    <p class="text-muted">
+                        Responde 6 preguntas rápidas y te recomendaremos los productos FuXion 
+                        perfectos para tus objetivos de salud y bienestar.
+                    </p>
+                </div>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="quiz-feature">
+                            <i class="fas fa-clock text-primary"></i>
+                            <small>Solo 2 minutos</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="quiz-feature">
+                            <i class="fas fa-user-check text-success"></i>
+                            <small>100% personalizado</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="quiz-feature">
+                            <i class="fas fa-envelope text-info"></i>
+                            <small>Resultados por email</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="/quiz" class="btn btn-primary btn-lg">
+                        <i class="fas fa-play-circle"></i> Comenzar Quiz Ahora
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="quizModalRemindLater">
+                        Recordarme más tarde
+                    </button>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-users"></i> Más de 2,500 personas ya lo han completado
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.quiz-modal-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+    box-shadow: 0 5px 20px rgba(74, 124, 89, 0.3);
+}
+
+.quiz-feature {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.quiz-feature:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.quiz-feature i {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.quiz-feature small {
+    font-weight: 500;
+    color: #6c757d;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+}
+
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 10px;
+    }
+    
+    .quiz-modal-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+}
+</style>
+
+<script>
+// Quiz Modal Logic
+(function() {
+    // Configuración
+    const MODAL_CONFIG = {
+        showAfterSeconds: 30,           // Mostrar después de 30 segundos
+        showAfterScroll: 50,            // O después de 50% de scroll
+        cookieExpireDays: 3,            // No mostrar de nuevo por 3 días si lo cierran
+        onlyShowOnce: false             // Mostrar solo una vez por sesión
+    };
+    
+    let modalShown = false;
+    let scrollThresholdReached = false;
+    
+    // Funciones de cookies
+    function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = name + "=" + value + ";expires=" + date.toUTCString() + ";path=/";
+    }
+    
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    
+    // Verificar si el modal ya fue mostrado/cerrado
+    function shouldShowModal() {
+        // No mostrar en la página del quiz
+        if (window.location.pathname === '/quiz') {
+            return false;
+        }
+        
+        // Verificar cookie
+        if (getCookie('quizModalDismissed') === 'true') {
+            return false;
+        }
+        
+        // Verificar sesión (solo una vez)
+        if (MODAL_CONFIG.onlyShowOnce && sessionStorage.getItem('quizModalShown') === 'true') {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // Mostrar el modal
+    function showQuizModal() {
+        if (!modalShown && shouldShowModal()) {
+            const modal = new bootstrap.Modal(document.getElementById('quizModal'));
+            modal.show();
+            modalShown = true;
+            sessionStorage.setItem('quizModalShown', 'true');
+            
+            // Analytics tracking (opcional)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'quiz_modal_shown', {
+                    'event_category': 'engagement',
+                    'event_label': 'Quiz Modal Popup'
+                });
+            }
+        }
+    }
+    
+    // Timer para mostrar después de X segundos
+    setTimeout(() => {
+        if (!scrollThresholdReached) {
+            showQuizModal();
+        }
+    }, MODAL_CONFIG.showAfterSeconds * 1000);
+    
+    // Scroll detector
+    window.addEventListener('scroll', function() {
+        if (modalShown) return;
+        
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        
+        if (scrollPercent >= MODAL_CONFIG.showAfterScroll && !scrollThresholdReached) {
+            scrollThresholdReached = true;
+            showQuizModal();
+        }
+    });
+    
+    // Evento cuando se cierra el modal
+    const quizModal = document.getElementById('quizModal');
+    if (quizModal) {
+        quizModal.addEventListener('hidden.bs.modal', function() {
+            // Guardar cookie para no mostrar de nuevo
+            setCookie('quizModalDismissed', 'true', MODAL_CONFIG.cookieExpireDays);
+        });
+    }
+    
+    // Botón "Recordarme más tarde" - solo oculta por esta sesión
+    const remindLaterBtn = document.getElementById('quizModalRemindLater');
+    if (remindLaterBtn) {
+        remindLaterBtn.addEventListener('click', function() {
+            sessionStorage.setItem('quizModalRemindLater', 'true');
+            // No guardar cookie, solo cerrar el modal
+        });
+    }
+})();
+</script>

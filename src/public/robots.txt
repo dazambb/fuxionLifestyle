@@ -1,0 +1,13 @@
+# Robot exclusion standard
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://fuxionlifestyle.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10

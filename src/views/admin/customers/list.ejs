@@ -1,0 +1,272 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="page-title">
+            <i class="fas fa-users me-2"></i>Mis Clientes
+        </h2>
+        <p class="text-muted">Gestiona tu cartera de clientes y realiza seguimiento</p>
+    </div>
+    <a href="/admin/customers/new" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Nuevo Cliente
+    </a>
+</div>
+
+<!-- Stats rápidos -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card-mini stat-primary">
+            <i class="fas fa-users"></i>
+            <div>
+                <h4><%= customers.length %></h4>
+                <p>Total Clientes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-mini stat-success">
+            <i class="fas fa-shopping-bag"></i>
+            <div>
+                <% const activeClients = customers.filter(c => c.days_since_purchase <= 30).length %>
+                <h4><%= activeClients %></h4>
+                <p>Clientes Activos</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-mini stat-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+                <% const inactiveClients = customers.filter(c => c.days_since_purchase > 30).length %>
+                <h4><%= inactiveClients %></h4>
+                <p>Requieren Seguimiento</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card-mini stat-info">
+            <i class="fas fa-calendar-check"></i>
+            <div>
+                <% const recentClients = customers.filter(c => c.days_since_purchase <= 7).length %>
+                <h4><%= recentClients %></h4>
+                <p>Últimos 7 días</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla de clientes -->
+<div class="card card-custom">
+    <div class="card-body">
+        <div class="search-box mb-4">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar clientes por nombre, teléfono o email...">
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover" id="customersTable">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Contacto</th>
+                        <th>Última Compra</th>
+                        <th>Total Compras</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (customers && customers.length > 0) { %>
+                        <% customers.forEach(customer => { %>
+                            <tr>
+                                <td>
+                                    <div class="customer-info">
+                                        <div class="customer-avatar">
+                                            <%= customer.name.charAt(0).toUpperCase() %>
+                                        </div>
+                                        <div>
+                                            <strong><%= customer.name %></strong>
+                                            <% if (customer.city) { %>
+                                                <br><small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i><%= customer.city %></small>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <% if (customer.phone) { %>
+                                        <a href="https://wa.me/593<%= customer.phone.replace(/\D/g, '') %>" target="_blank" class="text-success">
+                                            <i class="fab fa-whatsapp me-1"></i><%= customer.phone %>
+                                        </a>
+                                    <% } else { %>
+                                        <span class="text-muted">Sin teléfono</span>
+                                    <% } %>
+                                    <% if (customer.email) { %>
+                                        <br><small><%= customer.email %></small>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (customer.last_purchase_date) { %>
+                                        <%= new Date(customer.last_purchase_date).toLocaleDateString('es-ES') %>
+                                    <% } else { %>
+                                        <span class="text-muted">Sin compras</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary"><%= customer.total_purchases || 0 %></span>
+                                </td>
+                                <td>
+                                    <% const days = customer.days_since_purchase; %>
+                                    <% if (!days || days === null) { %>
+                                        <span class="badge bg-secondary">Nuevo</span>
+                                    <% } else if (days <= 7) { %>
+                                        <span class="badge bg-success">Reciente</span>
+                                    <% } else if (days <= 30) { %>
+                                        <span class="badge bg-info">Activo</span>
+                                    <% } else if (days <= 60) { %>
+                                        <span class="badge bg-warning">Seguimiento</span>
+                                    <% } else { %>
+                                        <span class="badge bg-danger">Inactivo</span>
+                                    <% } %>
+                                    <% if (days) { %>
+                                        <br><small class="text-muted"><%= days %> días</small>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="/admin/customers/<%= customer.id %>/edit" class="btn btn-sm btn-outline-primary" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <% if (customer.phone) { %>
+                                            <a href="https://wa.me/593<%= customer.phone.replace(/\D/g, '') %>?text=Hola <%= customer.name %>, ¿cómo estás?" 
+                                               target="_blank" 
+                                               class="btn btn-sm btn-outline-success" 
+                                               title="WhatsApp">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
+                                        <% } %>
+                                        <button onclick="deleteCustomer(<%= customer.id %>)" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="fas fa-users fa-4x text-muted mb-3 d-block"></i>
+                                <h5 class="text-muted">No hay clientes registrados</h5>
+                                <p class="text-muted">Comienza agregando tu primer cliente</p>
+                                <a href="/admin/customers/new" class="btn btn-primary mt-2">
+                                    <i class="fas fa-plus me-2"></i>Agregar Cliente
+                                </a>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+.stat-card-mini {
+    background: white;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-left: 4px solid;
+}
+
+.stat-card-mini.stat-primary {
+    border-left-color: #4A7C59;
+}
+
+.stat-card-mini.stat-success {
+    border-left-color: #2ecc71;
+}
+
+.stat-card-mini.stat-warning {
+    border-left-color: #f39c12;
+}
+
+.stat-card-mini.stat-info {
+    border-left-color: #3498db;
+}
+
+.stat-card-mini i {
+    font-size: 2rem;
+    opacity: 0.7;
+}
+
+.stat-card-mini.stat-primary i {
+    color: #4A7C59;
+}
+
+.stat-card-mini.stat-success i {
+    color: #2ecc71;
+}
+
+.stat-card-mini.stat-warning i {
+    color: #f39c12;
+}
+
+.stat-card-mini.stat-info i {
+    color: #3498db;
+}
+
+.stat-card-mini h4 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.stat-card-mini p {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+</style>
+
+<script>
+// Búsqueda en tiempo real
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#customersTable tbody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
+    });
+});
+
+// Eliminar cliente
+function deleteCustomer(id) {
+    if (confirm('¿Estás segura que deseas eliminar este cliente? Esta acción no se puede deshacer.')) {
+        fetch(`/admin/customers/${id}/delete`, {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error al eliminar cliente');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar cliente');
+        });
+    }
+}
+</script>

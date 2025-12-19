@@ -1,0 +1,575 @@
+<!-- Hero Section -->
+<section class="distributor-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                <div class="badge bg-primary text-white px-3 py-2 mb-3">
+                    <i class="fas fa-star"></i> Oportunidad de Negocio
+                </div>
+                <h1 class="display-3 fw-bold mb-4">
+                    Conviértete en <span class="text-gradient">Distribuidor FuXion</span>
+                </h1>
+                <p class="fs-5 text-muted mb-4 lh-base">
+                    Únete a una red global de emprendedores exitosos. Construye tu propio negocio 
+                    mientras ayudas a otros a mejorar su salud y bienestar.
+                </p>
+                <div class="hero-features mb-4">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <div class="feature-text">
+                            <strong>Ingresos Ilimitados</strong>
+                            <small>Tú decides cuánto ganar</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="feature-text">
+                            <strong>Horario Flexible</strong>
+                            <small>Trabaja cuando quieras</small>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="feature-text">
+                            <strong>Capacitación Constante</strong>
+                            <small>Aprende de los mejores</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="#calculator" class="btn btn-primary btn-lg px-4">
+                        <i class="fas fa-calculator"></i> Ver Ingresos Potenciales
+                    </a>
+                    <a href="#contact-form" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fas fa-rocket"></i> Comenzar Ahora
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="hero-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800" 
+                         alt="Distribuidor FuXion" 
+                         class="img-fluid rounded-4 shadow-lg">
+                    <div class="hero-badge">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <strong>5,420+</strong>
+                            <small>Distribuidores</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Counter -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number"><span class="counter" data-target="5420">0</span></h3>
+                        <p class="stat-label">Distribuidores Activos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-blue">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number"><span class="counter" data-target="24">0</span></h3>
+                        <p class="stat-label">Países</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-gold">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number"><span class="counter" data-target="98">0</span>%</h3>
+                        <p class="stat-label">Satisfacción</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-success">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">$<span class="counter" data-target="2500">0</span>+</h3>
+                        <p class="stat-label">Promedio Mensual</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Income Calculator -->
+<section id="calculator" class="calculator-section py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title text-white mb-3">Calcula tus Ingresos Potenciales</h2>
+            <p class="text-white-50 fs-5 mb-0">
+                Usa nuestro simulador interactivo para estimar tus ganancias mensuales y anuales
+            </p>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                <div class="calculator-card">
+                    <div class="mb-4">
+                        <label for="salesRange" class="form-label d-flex justify-content-between">
+                            <span><i class="fas fa-shopping-cart"></i> Ventas personales al mes</span>
+                            <strong id="salesValue">10</strong>
+                        </label>
+                        <input type="range" class="form-range" id="salesRange" min="0" max="50" value="10" step="1">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="teamRange" class="form-label d-flex justify-content-between">
+                            <span><i class="fas fa-users"></i> Personas en tu equipo</span>
+                            <strong id="teamValue">5</strong>
+                        </label>
+                        <input type="range" class="form-range" id="teamRange" min="0" max="100" value="5" step="1">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="commissionRange" class="form-label d-flex justify-content-between">
+                            <span><i class="fas fa-percentage"></i> Comisión promedio por venta</span>
+                            <strong id="commissionValue">$25</strong>
+                        </label>
+                        <input type="range" class="form-range" id="commissionRange" min="15" max="50" value="25" step="1">
+                    </div>
+                    
+                    <div class="result-box text-center">
+                        <p class="mb-2 text-muted">Tus ingresos potenciales mensuales:</p>
+                        <h2 class="income-result mb-2">$<span id="monthlyIncome">375</span></h2>
+                        <p class="text-muted small mb-3">Ingreso anual estimado: <strong>$<span id="yearlyIncome">4,500</span></strong></p>
+                        <div class="alert alert-info mb-0">
+                            <i class="fas fa-lightbulb"></i> <small>Estos son cálculos aproximados. Los resultados reales pueden variar según tu esfuerzo y dedicación.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="benefits-highlight">
+                    <h4 class="text-white mb-4"><i class="fas fa-rocket"></i> Potencia tus Ingresos</h4>
+                    <div class="benefit-point">
+                        <div class="benefit-icon-small">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white">Ingresos Escalables</h5>
+                            <p class="text-white-50">A medida que crece tu red, tus ingresos aumentan exponencialmente</p>
+                        </div>
+                    </div>
+                    <div class="benefit-point">
+                        <div class="benefit-icon-small">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white">Ingresos Residuales</h5>
+                            <p class="text-white-50">Gana comisiones recurrentes por las compras de tu red mes tras mes</p>
+                        </div>
+                    </div>
+                    <div class="benefit-point">
+                        <div class="benefit-icon-small">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white">Bonos por Desempeño</h5>
+                            <p class="text-white-50">Obtén bonos extras, premios y viajes al alcanzar tus metas</p>
+                        </div>
+                    </div>
+                    <div class="benefit-point">
+                        <div class="benefit-icon-small">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white">Sin Límites</h5>
+                            <p class="text-white-50">No hay techo en tus ganancias, tú decides hasta dónde llegar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Cards -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">Beneficios de Ser Distribuidor</h2>
+            <p class="section-subtitle">Todo lo que obtienes al unirte a la familia FuXion</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="benefit-box">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="benefit-title">Ingresos Residuales</h4>
+                    <p class="text-muted">
+                        Gana comisiones recurrentes por las compras de tu red. 
+                        Construye ingresos pasivos mientras ayudas a otros.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="benefit-box">
+                    <div class="benefit-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4 class="benefit-title">Capacitación Profesional</h4>
+                    <p class="text-muted">
+                        Accede a entrenamientos, webinars y eventos exclusivos 
+                        para desarrollar tus habilidades.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="benefit-box">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4 class="benefit-title">Comunidad de Apoyo</h4>
+                    <p class="text-muted">
+                        Únete a una red de emprendedores motivados que se apoyan 
+                        mutuamente para alcanzar el éxito.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="benefit-box">
+                    <div class="benefit-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h4 class="benefit-title">Bonos y Premios</h4>
+                    <p class="text-muted">
+                        Recibe incentivos, bonos por rendimiento y viajes 
+                        internacionales por tus logros.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="benefit-box">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="benefit-title">Libertad de Tiempo</h4>
+                    <p class="text-muted">
+                        Trabaja cuando y donde quieras. Tú decides tu horario 
+                        y ritmo de crecimiento.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="benefit-box">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4 class="benefit-title">Herramientas Digitales</h4>
+                    <p class="text-muted">
+                        Plataforma online, app móvil y materiales de marketing 
+                        para hacer crecer tu negocio.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">¿Cómo Funciona?</h2>
+            <p class="section-subtitle">3 simples pasos para comenzar tu negocio</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-center">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" 
+                         style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                        1
+                    </div>
+                    <h4 class="mb-3">Regístrate</h4>
+                    <p class="text-muted">
+                        Completa el formulario de registro y comienza tu viaje 
+                        emprendedor con una inversión mínima.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" 
+                         style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                        2
+                    </div>
+                    <h4 class="mb-3">Capacítate</h4>
+                    <p class="text-muted">
+                        Recibe entrenamiento sobre productos, ventas y cómo 
+                        construir tu red de distribuidores.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-center">
+                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center mb-3" 
+                         style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                        3
+                    </div>
+                    <h4 class="mb-3">Empieza a Ganar</h4>
+                    <p class="text-muted">
+                        Comparte los productos, construye tu red y comienza 
+                        a generar ingresos desde el primer día.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Stories -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">Historias de Éxito</h2>
+            <p class="section-subtitle">Conoce a algunos de nuestros distribuidores exitosos</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <img src="https://i.pravatar.cc/150?img=12" alt="Carlos" class="rounded-circle mb-3" width="100" height="100">
+                        <h5 class="card-title">Carlos Rodríguez</h5>
+                        <p class="text-muted mb-3">Distribuidor Diamante</p>
+                        <p class="card-text">
+                            "En 2 años pasé de tener un trabajo tradicional a ser mi propio jefe. 
+                            FuXion cambió mi vida y la de mi familia."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <img src="https://i.pravatar.cc/150?img=5" alt="Ana" class="rounded-circle mb-3" width="100" height="100">
+                        <h5 class="card-title">Ana Martínez</h5>
+                        <p class="text-muted mb-3">Distribuidora Oro</p>
+                        <p class="card-text">
+                            "Comencé sin experiencia en ventas. Hoy tengo una red de más de 50 
+                            personas y gano el triple que en mi antiguo trabajo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <img src="https://i.pravatar.cc/150?img=8" alt="Luis" class="rounded-circle mb-3" width="100" height="100">
+                        <h5 class="card-title">Luis Pérez</h5>
+                        <p class="text-muted mb-3">Distribuidor Platino</p>
+                        <p class="card-text">
+                            "La libertad financiera que buscaba la encontré en FuXion. 
+                            Ahora puedo viajar mientras mi negocio sigue creciendo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section id="contact-form" class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="contact-form" data-aos="fade-up">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">¿Listo para Empezar?</h2>
+                        <p class="text-muted">Completa el formulario y te contactaremos para brindarte más información</p>
+                    </div>
+                    
+                    <form id="distributorForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre Completo *</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico *</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Teléfono / WhatsApp *</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="city" class="form-label">Ciudad *</label>
+                            <input type="text" class="form-control" id="city" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label">¿Por qué quieres ser distribuidor?</label>
+                            <textarea class="form-control" id="message" rows="4" placeholder="Ejemplo: Busco libertad financiera, quiero ayudar a otros con su salud..."></textarea>
+                        </div>
+                        
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                Acepto recibir información sobre el programa de distribuidores *
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane"></i> Enviar Solicitud
+                            </button>
+                        </div>
+                        
+                        <p class="text-center text-muted small mt-3">
+                            <i class="fas fa-lock"></i> Tu información está segura y protegida
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <p class="section-subtitle">Respuestas a las dudas más comunes</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto" data-aos="fade-up" data-aos-delay="100">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                ¿Cuánto cuesta ser distribuidor?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                La inversión inicial es mínima. Solo necesitas adquirir un kit de inicio que incluye 
+                                productos, materiales de marketing y acceso a la plataforma de distribuidores.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                ¿Necesito experiencia en ventas?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                No, no necesitas experiencia previa. Brindamos capacitación completa sobre productos, 
+                                técnicas de venta y estrategias de construcción de red.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                ¿Cuánto puedo ganar?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Tus ingresos dependen de tu esfuerzo y dedicación. Algunos distribuidores generan 
+                                ingresos complementarios, mientras que otros construyen negocios de tiempo completo 
+                                con ingresos de 5 cifras mensuales.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                ¿Qué soporte recibiré?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Tendrás acceso a capacitaciones constantes, materiales de marketing, soporte técnico, 
+                                un mentor personal y una comunidad activa de distribuidores.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                ¿Puedo trabajar desde casa?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Absolutamente. El negocio de FuXion es totalmente flexible y puedes trabajar desde 
+                                donde quieras, manejando tu propio horario.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="text-center cta-content" data-aos="fade-up">
+            <h2 class="display-4 fw-bold mb-3">¡Tu Futuro Comienza Hoy!</h2>
+            <p class="fs-5 mb-4">
+                No esperes más para tomar el control de tu vida financiera y ayudar a otros a mejorar su salud
+            </p>
+            <a href="https://wa.me/51999999999?text=Hola,%20quiero%20información%20sobre%20ser%20distribuidor%20FuXion" 
+               class="btn btn-light btn-lg" 
+               target="_blank">
+                <i class="fab fa-whatsapp"></i> Contáctame por WhatsApp
+            </a>
+        </div>
+    </div>
+</section>

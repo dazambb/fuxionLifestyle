@@ -1,0 +1,391 @@
+<!-- Toast de bienvenida -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11000;">
+    <div id="welcomeToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong class="me-auto">¡Bienvenida!</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <strong>¡Bienvenida Dioselina!</strong> 🌿<br>
+            <small>¡Que tengas un día lleno de éxitos!</small>
+        </div>
+    </div>
+</div>
+
+<!-- Bienvenida personalizada -->
+<div class="dashboard-header mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h2 class="dashboard-title">
+                <i class="fas fa-home me-2"></i>Bienvenida, Dioselina
+            </h2>
+            <p class="dashboard-subtitle">¡Vamos a hacer que hoy sea un día productivo! 💪</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <div class="dashboard-date">
+                <i class="fas fa-calendar-alt me-2"></i>
+                <span id="currentDate"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estadísticas principales -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-card-v2 stat-primary">
+            <div class="stat-icon-v2">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number"><%= stats.customers_count || 0 %></h3>
+                <p class="stat-label">Clientes</p>
+                <a href="/admin/customers" class="stat-link">Ver todos →</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-card-v2 stat-success">
+            <div class="stat-icon-v2">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number"><%= stats.purchases_count || 0 %></h3>
+                <p class="stat-label">Ventas del Mes</p>
+                <small class="stat-detail">+<%= stats.purchases_growth || 0 %>% vs mes anterior</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-card-v2 stat-warning">
+            <div class="stat-icon-v2">
+                <i class="fas fa-newspaper"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number"><%= stats.posts_count || 0 %></h3>
+                <p class="stat-label">Artículos Blog</p>
+                <a href="/admin/blog" class="stat-link">Escribir nuevo →</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6">
+        <div class="stat-card-v2 stat-info">
+            <div class="stat-icon-v2">
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="stat-content">
+                <h3 class="stat-number"><%= stats.products_count || 0 %></h3>
+                <p class="stat-label">Productos</p>
+                <a href="/admin/products" class="stat-link">Gestionar →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Objetivos Semanales -->
+<div class="row g-4 mb-4">
+    <div class="col-12">
+        <div class="goals-card">
+            <div class="goals-header">
+                <h5 class="goals-title">
+                    <i class="fas fa-bullseye me-2"></i>Objetivos de esta Semana
+                </h5>
+                <button class="btn btn-sm btn-light" onclick="resetWeeklyGoals()">
+                    <i class="fas fa-redo me-1"></i>Reiniciar
+                </button>
+            </div>
+            
+            <div class="row g-3">
+                <div class="col-lg-3 col-md-6">
+                    <div class="goal-item">
+                        <div class="goal-icon goal-icon-purple">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h6 class="goal-name">Publicaciones Blog</h6>
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress" style="width: <%= Math.min((stats.weekly_blog_posts || 0) / 3 * 100, 100) %>%"></div>
+                            </div>
+                            <p class="goal-text"><span class="goal-current"><%= stats.weekly_blog_posts || 0 %></span> / 3 artículos</p>
+                            <button class="btn-goal-increment" onclick="incrementGoal('blog_posts')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="goal-item">
+                        <div class="goal-icon goal-icon-blue">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h6 class="goal-name">Llamadas a Clientes</h6>
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress" style="width: <%= Math.min((stats.weekly_calls || 0) / 5 * 100, 100) %>%"></div>
+                            </div>
+                            <p class="goal-text"><span class="goal-current"><%= stats.weekly_calls || 0 %></span> / 5 llamadas</p>
+                            <button class="btn-goal-increment" onclick="incrementGoal('customer_calls')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="goal-item">
+                        <div class="goal-icon goal-icon-pink">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h6 class="goal-name">Contenido Redes</h6>
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress" style="width: <%= Math.min((stats.weekly_social || 0) / 7 * 100, 100) %>%"></div>
+                            </div>
+                            <p class="goal-text"><span class="goal-current"><%= stats.weekly_social || 0 %></span> / 7 posts</p>
+                            <button class="btn-goal-increment" onclick="incrementGoal('social_posts')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="goal-item">
+                        <div class="goal-icon goal-icon-green">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="goal-content">
+                            <h6 class="goal-name">Seguimiento Clientes</h6>
+                            <div class="goal-progress-bar">
+                                <div class="goal-progress" style="width: <%= Math.min((stats.weekly_followups || 0) / 5 * 100, 100) %>%"></div>
+                            </div>
+                            <p class="goal-text"><span class="goal-current"><%= stats.weekly_followups || 0 %></span> / 5 seguimientos</p>
+                            <button class="btn-goal-increment" onclick="incrementGoal('followups')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Clientes Recientes y Acciones Rápidas -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="dashboard-card">
+            <div class="card-header-custom">
+                <h5 class="card-title-custom">
+                    <i class="fas fa-users me-2"></i>Clientes Recientes
+                </h5>
+                <a href="/admin/customers" class="btn btn-sm btn-primary">
+                    <i class="fas fa-plus me-1"></i>Nuevo Cliente
+                </a>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover customers-table">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Última Compra</th>
+                            <th>Productos</th>
+                            <th>Días desde compra</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentCustomersTable">
+                        <% if (recentCustomers && recentCustomers.length > 0) { %>
+                            <% recentCustomers.forEach(customer => { %>
+                                <tr>
+                                    <td>
+                                        <div class="customer-info">
+                                            <div class="customer-avatar">
+                                                <%= customer.name.charAt(0).toUpperCase() %>
+                                            </div>
+                                            <div>
+                                                <strong><%= customer.name %></strong>
+                                                <br><small class="text-muted"><%= customer.phone || 'Sin teléfono' %></small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><%= customer.last_purchase_date || 'Sin compras' %></td>
+                                    <td><%= customer.total_purchases || 0 %></td>
+                                    <td>
+                                        <% const daysSince = customer.days_since_purchase; %>
+                                        <span class="badge <%= daysSince > 30 ? 'bg-danger' : daysSince > 15 ? 'bg-warning' : 'bg-success' %>">
+                                            <%= daysSince || 0 %> días
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="contactCustomer('<%= customer.phone %>', '<%= customer.name %>')">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } else { %>
+                            <tr>
+                                <td colspan="5" class="text-center py-4">
+                                    <i class="fas fa-users fa-3x text-muted mb-3 d-block"></i>
+                                    <p class="text-muted">No hay clientes registrados aún</p>
+                                    <a href="/admin/customers" class="btn btn-primary mt-2">
+                                        <i class="fas fa-plus me-2"></i>Registrar primer cliente
+                                    </a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="dashboard-card">
+            <div class="card-header-custom">
+                <h5 class="card-title-custom">
+                    <i class="fas fa-bolt me-2"></i>Acciones Rápidas
+                </h5>
+            </div>
+            
+            <div class="quick-actions">
+                <a href="/admin/customers" class="quick-action-btn quick-action-primary">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="quick-action-text">
+                        <strong>Nuevo Cliente</strong>
+                        <small>Registrar cliente</small>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                
+                <a href="/admin/blog/new" class="quick-action-btn quick-action-success">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-pen"></i>
+                    </div>
+                    <div class="quick-action-text">
+                        <strong>Escribir Artículo</strong>
+                        <small>Crear contenido</small>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                
+                <a href="/admin/products/new" class="quick-action-btn quick-action-warning">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="quick-action-text">
+                        <strong>Agregar Producto</strong>
+                        <small>Catálogo</small>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                
+                <a href="/" target="_blank" class="quick-action-btn quick-action-info">
+                    <div class="quick-action-icon">
+                        <i class="fas fa-external-link-alt"></i>
+                    </div>
+                    <div class="quick-action-text">
+                        <strong>Ver Sitio Web</strong>
+                        <small>Vista pública</small>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Motivación diaria -->
+        <div class="motivation-card mt-4">
+            <div class="motivation-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <h6 class="motivation-title">¡Sigue así!</h6>
+            <p class="motivation-text" id="motivationalQuote">Cada cliente satisfecho es un paso hacia el éxito.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Fecha actual
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-ES', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+});
+
+// Frases motivacionales
+const quotes = [
+    "Cada cliente satisfecho es un paso hacia el éxito.",
+    "Tu dedicación marca la diferencia en la vida de tus clientes.",
+    "Hoy es un gran día para impactar vidas positivamente.",
+    "El éxito se construye con pequeñas acciones diarias.",
+    "Tu esfuerzo hoy será tu recompensa mañana."
+];
+document.getElementById('motivationalQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// Funciones para objetivos
+function incrementGoal(type) {
+    fetch(`/admin/api/goals/increment/${type}`, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function resetWeeklyGoals() {
+    if (confirm('¿Estás segura que quieres reiniciar los objetivos semanales?')) {
+        fetch('/admin/api/goals/reset', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+}
+
+function contactCustomer(phone, name) {
+    if (phone && phone !== 'Sin teléfono') {
+        const message = `Hola ${name}, ¿cómo estás? Te contacto de FuXion para saber si necesitas algo.`;
+        window.open(`https://wa.me/593${phone.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`, '_blank');
+    } else {
+        alert('Este cliente no tiene teléfono registrado');
+    }
+}
+
+// Mostrar toast de bienvenida si acaba de hacer login
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+if (getCookie('welcome_message') === 'true') {
+    const toastEl = document.getElementById('welcomeToast');
+    const toast = new bootstrap.Toast(toastEl, {
+        autohide: true,
+        delay: 5000
+    });
+    toast.show();
+    
+    // Eliminar la cookie después de mostrar
+    document.cookie = 'welcome_message=; Max-Age=0';
+}
+</script>

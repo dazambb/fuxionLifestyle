@@ -1,0 +1,111 @@
+<!-- Blog Header -->
+<section class="blog-detail-header mt-5" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('<%= post.image_url || 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200' %>');">
+    <div class="container">
+        <div class="blog-detail-title text-center">
+            <h1 class="display-3 fw-bold mb-3" data-aos="fade-up"><%= post.title %></h1>
+            <p class="lead mb-0" data-aos="fade-up" data-aos-delay="100">
+                <i class="far fa-calendar me-2"></i> <%= new Date(post.published_at || post.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                <span class="mx-3">|</span>
+                <i class="far fa-user me-2"></i> Por <%= post.author %>
+                <span class="mx-3">|</span>
+                <i class="far fa-eye me-2"></i> <%= post.views %> vistas
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <% if (post.excerpt) { %>
+                    <p class="lead" data-aos="fade-up">
+                        <%= post.excerpt %>
+                    </p>
+                <% } %>
+                
+                <article class="blog-content" data-aos="fade-up">
+                    <%- post.content %>
+                </article>
+                
+                <!-- Share Buttons -->
+                <div class="mt-5 pt-4 border-top" data-aos="fade-up">
+                    <h5 class="mb-3">Compartir este artículo:</h5>
+                    <a href="#" class="btn btn-outline-primary me-2 mb-2">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </a>
+                    <a href="#" class="btn btn-outline-primary me-2 mb-2">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="btn btn-outline-success me-2 mb-2">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+                
+                <!-- Author Info -->
+                <div class="card mt-5 border-0 shadow-sm" data-aos="fade-up">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center">
+                            <img src="/public/img/diosa.jpg" alt="Author" class="rounded-circle me-3" width="80" height="80">
+                            <div>
+                                <h5 class="mb-1">Dioselina Bermúdez</h5>
+                                <p class="text-muted mb-2">Experta en Salud y Bienestar</p>
+                                <p class="mb-0">
+                                    Nuestro equipo está dedicado a proporcionarte información valiosa sobre 
+                                    salud, nutrición y bienestar para que puedas vivir tu mejor vida.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Posts -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title text-center mb-5" data-aos="fade-up">Artículos Relacionados</h2>
+        
+        <div class="row g-4">
+            <% if (relatedPosts && relatedPosts.length > 0) { %>
+                <% relatedPosts.forEach((relatedPost, index) => { %>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="<%= (index + 1) * 100 %>">
+                        <div class="card blog-card h-100">
+                            <img src="<%= relatedPost.image_url || 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400' %>" class="card-img-top" alt="<%= relatedPost.title %>">
+                            <div class="card-body">
+                                <p class="blog-date">
+                                    <i class="far fa-calendar"></i> <%= new Date(relatedPost.published_at || relatedPost.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                                </p>
+                                <h5 class="card-title"><%= relatedPost.title %></h5>
+                                <% if (relatedPost.excerpt) { %>
+                                    <p class="card-text"><%= relatedPost.excerpt.substring(0, 100) %>...</p>
+                                <% } %>
+                                <a href="/blog/<%= relatedPost.id %>" class="btn btn-outline-primary">Leer más</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="col-12 text-center text-muted">
+                    <p>No hay artículos relacionados disponibles</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="text-center cta-content" data-aos="fade-up">
+            <h2 class="display-4 fw-bold mb-3">¿Quieres Más Energía Natural?</h2>
+            <p class="fs-5 mb-4">Descubre nuestros productos diseñados para aumentar tu energía de forma saludable</p>
+            <a href="/productos" class="btn btn-light btn-lg">
+                <i class="fas fa-shopping-bag"></i> Ver Productos
+            </a>
+        </div>
+    </div>
+</section>

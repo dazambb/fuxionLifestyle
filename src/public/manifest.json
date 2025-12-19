@@ -1,0 +1,67 @@
+{
+  "name": "FuXion Lifestyle - Distribuidora Oficial",
+  "short_name": "FuXion",
+  "description": "Distribuidor Oficial de FuXion - Productos naturales para tu salud y bienestar",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4A7C59",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es-ES",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/public/img/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/public/img/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/public/img/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/public/img/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "lifestyle", "shopping"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Productos",
+      "short_name": "Productos",
+      "description": "Ver catálogo de productos FuXion",
+      "url": "/productos",
+      "icons": [
+        {
+          "src": "/public/img/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contacto",
+      "short_name": "Contacto",
+      "description": "Contáctanos",
+      "url": "/contacto",
+      "icons": [
+        {
+          "src": "/public/img/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

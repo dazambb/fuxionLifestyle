@@ -1,0 +1,147 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0"><%= product ? 'Editar' : 'Nuevo' %> Producto</h4>
+    <a href="/admin/products" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+    </a>
+</div>
+
+<div class="card card-custom">
+    <div class="card-body">
+        <form method="POST" action="<%= product ? '/admin/products/edit/' + product.id : '/admin/products/new' %>">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre del Producto *</label>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               value="<%= product ? product.name : '' %>" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="slug" class="form-label">Slug (URL amigable)</label>
+                        <input type="text" class="form-control" id="slug" name="slug" 
+                               value="<%= product ? product.slug : '' %>" 
+                               placeholder="Se genera automáticamente si se deja vacío">
+                        <small class="text-muted">Ej: hydro-fusion, omegafx</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Categoría *</label>
+                        <select class="form-select" id="category" name="category" required>
+                            <option value="">Seleccionar categoría</option>
+                            <option value="energia" <%= product && product.category === 'energia' ? 'selected' : '' %>>Energía</option>
+                            <option value="defensas" <%= product && product.category === 'defensas' ? 'selected' : '' %>>Defensas</option>
+                            <option value="peso" <%= product && product.category === 'peso' ? 'selected' : '' %>>Control de Peso</option>
+                            <option value="nutricion" <%= product && product.category === 'digestion' ? 'selected' : '' %>>Digestión</option>
+                            <option value="nutricion" <%= product && product.category === 'deportes' ? 'selected' : '' %>>Deportes</option>
+                            <option value="belleza" <%= product && product.category === 'belleza' ? 'selected' : '' %>>Belleza</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripción *</label>
+                        <textarea class="form-control" id="description" name="description" 
+                                  rows="3" required><%= product ? product.description : '' %></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="benefits" class="form-label">Beneficios</label>
+                        <textarea class="form-control" id="benefits" name="benefits" 
+                                  rows="3"><%= product ? product.benefits : '' %></textarea>
+                        <small class="text-muted">Separados por comas</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="ingredients" class="form-label">Ingredientes</label>
+                        <textarea class="form-control" id="ingredients" name="ingredients" 
+                                  rows="3"><%= product ? product.ingredients : '' %></textarea>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="image_url" class="form-label">URL de Imagen</label>
+                        <input type="url" class="form-control" id="image_url" name="image_url" 
+                               value="<%= product ? product.image_url : '' %>">
+                        <% if (product && product.image_url) { %>
+                            <img src="<%= product.image_url %>" alt="Preview" 
+                                 class="img-fluid rounded mt-2" id="imagePreview">
+                        <% } else { %>
+                            <img src="" alt="Preview" class="img-fluid rounded mt-2 d-none" id="imagePreview">
+                        <% } %>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="fuxion_url" class="form-label">URL de FuXion</label>
+                        <input type="url" class="form-control" id="fuxion_url" name="fuxion_url" 
+                               value="<%= product ? product.fuxion_url : '' %>" 
+                               placeholder="https://www.fuxion.com/producto...">
+                        <small class="text-muted">Opcional. Link directo al producto en FuXion</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="display_order" class="form-label">Orden de Visualización</label>
+                        <input type="number" class="form-control" id="display_order" name="display_order" 
+                               value="<%= product ? product.display_order : 0 %>" min="0">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="featured" name="featured" 
+                                   <%= product && product.featured ? 'checked' : '' %>>
+                            <label class="form-check-label" for="featured">
+                                Producto Destacado
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="active" name="active" 
+                                   <%= !product || product.active ? 'checked' : '' %>>
+                            <label class="form-check-label" for="active">
+                                Producto Activo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i> Guardar
+                </button>
+                <a href="/admin/products" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Preview de imagen
+    document.getElementById('image_url').addEventListener('input', function(e) {
+        const preview = document.getElementById('imagePreview');
+        if (e.target.value) {
+            preview.src = e.target.value;
+            preview.classList.remove('d-none');
+        } else {
+            preview.classList.add('d-none');
+        }
+    });
+    
+    // Auto-generar slug
+    document.getElementById('name').addEventListener('input', function(e) {
+        const slugInput = document.getElementById('slug');
+        if (!slugInput.value || slugInput.dataset.auto !== 'false') {
+            const slug = e.target.value
+                .toLowerCase()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/--+/g, '-');
+            slugInput.value = slug;
+        }
+    });
+    
+    document.getElementById('slug').addEventListener('input', function() {
+        this.dataset.auto = 'false';
+    });
+</script>

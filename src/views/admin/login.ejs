@@ -1,0 +1,61 @@
+<div class="login-card">
+    <div class="login-header">
+        <div class="logo-icon">
+            <i class="fas fa-leaf"></i>
+        </div>
+        <h3>FuXion Lifestyle</h3>
+        <p>Panel de Administración</p>
+    </div>
+    
+    <div class="login-body">
+        <% if (error) { %>
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <%= error %>
+            </div>
+        <% } %>
+        
+        <form method="POST" action="/admin/login">
+            <div class="mb-3">
+                <label for="username" class="form-label">
+                    <i class="fas fa-user me-1"></i> Usuario
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-user-circle"></i>
+                    </span>
+                    <input type="text" 
+                           class="form-control" 
+                           id="username" 
+                           name="username" 
+                           placeholder="Ingresa tu usuario"
+                           required 
+                           autofocus>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="password" class="form-label">
+                    <i class="fas fa-lock me-1"></i> Contraseña
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-key"></i>
+                    </span>
+                    <input type="password" 
+                           class="form-control" 
+                           id="password" 
+                           name="password" 
+                           placeholder="Ingresa tu contraseña"
+                           required>
+                </div>
+            </div>
+            
+            <div class="d-grid">
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

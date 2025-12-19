@@ -1,0 +1,59 @@
+{
+  "name": "fuxion-lifestyle",
+  "version": "1.0.0",
+  "description": "Sitio web oficial de distribuidor FuXion - Productos naturales para tu salud y bienestar",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "build": "echo 'No build step required'",
+    "verify": "node verify-deployment.js",
+    "pm2:start": "pm2 start server.js --name fuxion-lifestyle",
+    "pm2:stop": "pm2 stop fuxion-lifestyle",
+    "pm2:restart": "pm2 restart fuxion-lifestyle",
+    "pm2:logs": "pm2 logs fuxion-lifestyle",
+    "pm2:delete": "pm2 delete fuxion-lifestyle"
+  },
+  "keywords": [
+    "fuxion",
+    "health",
+    "wellness",
+    "natural-products",
+    "distributor",
+    "ecommerce",
+    "nutrition",
+    "supplements"
+  ],
+  "author": "FuXion Lifestyle",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/fuxion-lifestyle.git"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^1.20.1",
+    "bootstrap": "^5.3.8",
+    "compression": "^1.8.1",
+    "connect-mysql": "^4.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
+    "nodemailer": "^6.10.1",
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7",
+    "swiper": "^12.0.3"
+  }
+}

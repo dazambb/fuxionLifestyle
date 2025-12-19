@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="mb-1">Gestión de Productos</h4>
+        <p class="text-muted small mb-0">
+            <i class="fas fa-box me-1"></i>
+            <%= products.length %> producto(s) registrado(s)
+        </p>
+    </div>
+    <a href="/admin/products/new" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>
+        Nuevo Producto
+    </a>
+</div>
+
+<div class="card-custom">
+    <div class="card-body">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input 
+                type="text" 
+                id="searchProducts" 
+                class="form-control" 
+                placeholder="Buscar productos por nombre, categoría..." 
+                onkeyup="searchTable('searchProducts', 'productsTable')">
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover" id="productsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Estado</th>
+                        <th>Destacado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (products.length === 0) { %>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                No hay productos registrados
+                            </td>
+                        </tr>
+                    <% } else { %>
+                        <% products.forEach(product => { %>
+                            <tr>
+                                <td>
+                                    <img src="<%= product.image_url %>" alt="<%= product.name %>" 
+                                         class="rounded" style="width: 50px; height: 50px; object-fit: cover;">
+                                </td>
+                                <td><strong><%= product.name %></strong></td>
+                                <td>
+                                    <span class="badge bg-secondary"><%= product.category %></span>
+                                </td>
+                                <td>
+                                    <% if (product.active) { %>
+                                        <span class="badge bg-success">Activo</span>
+                                    <% } else { %>
+                                        <span class="badge bg-danger">Inactivo</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (product.featured) { %>
+                                        <i class="fas fa-star text-warning"></i>
+                                    <% } else { %>
+                                        <i class="far fa-star text-muted"></i>
+                                    <% } %>
+                                </td>
+                                <td class="table-actions">
+                                    <a href="/admin/products/edit/<%= product.id %>" 
+                                       class="btn btn-sm btn-outline-primary" 
+                                       title="Editar producto">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <button onclick="confirmDelete('/admin/products/delete/<%= product.id %>', 'producto')" 
+                                            class="btn btn-sm btn-outline-danger"
+                                            title="Eliminar producto">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

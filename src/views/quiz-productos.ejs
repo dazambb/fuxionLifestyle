@@ -1,0 +1,279 @@
+<!-- Product Quiz Section -->
+<section class="quiz-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Quiz Header -->
+                <div class="quiz-header text-center" data-aos="fade-up">
+                    <h1 class="fw-bold mb-3">Encuentra tu Producto Ideal</h1>
+                    <p class="lead text-muted">
+                        Responde estas breves preguntas y te recomendaremos los productos FuXion perfectos para ti
+                    </p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="quiz-progress mb-4" id="quizProgress" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">6</span></span>
+                        <span class="text-muted"><span id="progressPercent">0</span>%</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-primary" role="progressbar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Quiz Container -->
+                <div class="quiz-container">
+                    <!-- Start Screen -->
+                    <div class="quiz-start" id="quizStart">
+                        <div class="card border-0 shadow-lg">
+                            <div class="card-body p-5 text-center">
+                                <div class="mb-4">
+                                    <i class="fas fa-clipboard-list" style="font-size: 5rem; color: var(--primary-color);"></i>
+                                </div>
+                                <h3 class="mb-3">¿Listo para descubrir tu producto ideal?</h3>
+                                <p class="text-muted mb-4">
+                                    Este quiz te tomará aproximadamente 2 minutos. 
+                                    Recibirás recomendaciones personalizadas basadas en tus respuestas.
+                                </p>
+                                <button class="btn btn-primary btn-lg" onclick="startQuiz()">
+                                    <i class="fas fa-play"></i> Comenzar Quiz
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Questions -->
+                    <div class="quiz-questions" id="quizQuestions" style="display: none;">
+                        <!-- Question 1 -->
+                        <div class="question-card" data-question="1">
+                            <div class="card border-0 shadow-lg">
+                                <div class="card-body p-4">
+                                    <h4 class="question-title mb-4">¿Cuál es tu principal objetivo de salud?</h4>
+                                    <div class="options-grid">
+                                        <button class="option-btn" data-value="energia" onclick="selectOption(this, 1, 'energia')">
+                                            <i class="fas fa-bolt"></i>
+                                            <span>Aumentar mi energía</span>
+                                        </button>
+                                        <button class="option-btn" data-value="peso" onclick="selectOption(this, 1, 'peso')">
+                                            <i class="fas fa-weight"></i>
+                                            <span>Control de peso</span>
+                                        </button>
+                                        <button class="option-btn" data-value="inmunidad" onclick="selectOption(this, 1, 'inmunidad')">
+                                            <i class="fas fa-shield-alt"></i>
+                                            <span>Fortalecer inmunidad</span>
+                                        </button>
+                                        <button class="option-btn" data-value="digestion" onclick="selectOption(this, 1, 'digestion')">
+                                            <i class="fas fa-heartbeat"></i>
+                                            <span>Mejorar digestión</span>
+                                        </button>
+                                        <button class="option-btn" data-value="bienestar" onclick="selectOption(this, 1, 'bienestar')">
+                                            <i class="fas fa-spa"></i>
+                                            <span>Bienestar general</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="question-card" data-question="2" style="display: none;">
+                            <div class="card border-0 shadow-lg">
+                                <div class="card-body p-4">
+                                    <h4 class="question-title mb-4">¿Cuál es tu nivel de actividad física?</h4>
+                                    <div class="options-grid">
+                                        <button class="option-btn" data-value="sedentario" onclick="selectOption(this, 2, 'sedentario')">
+                                            <i class="fas fa-couch"></i>
+                                            <span>Sedentario</span>
+                                        </button>
+                                        <button class="option-btn" data-value="ligero" onclick="selectOption(this, 2, 'ligero')">
+                                            <i class="fas fa-walking"></i>
+                                            <span>Actividad ligera</span>
+                                        </button>
+                                        <button class="option-btn" data-value="moderado" onclick="selectOption(this, 2, 'moderado')">
+                                            <i class="fas fa-running"></i>
+                                            <span>Moderado</span>
+                                        </button>
+                                        <button class="option-btn" data-value="intenso" onclick="selectOption(this, 2, 'intenso')">
+                                            <i class="fas fa-dumbbell"></i>
+                                            <span>Muy activo</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="question-card" data-question="3" style="display: none;">
+                            <div class="card border-0 shadow-lg">
+                                <div class="card-body p-4">
+                                    <h4 class="question-title mb-4">¿Qué horario prefieres para consumir suplementos?</h4>
+                                    <div class="options-grid">
+                                        <button class="option-btn" data-value="manana" onclick="selectOption(this, 3, 'manana')">
+                                            <i class="fas fa-sun"></i>
+                                            <span>Por la mañana</span>
+                                        </button>
+                                        <button class="option-btn" data-value="tarde" onclick="selectOption(this, 3, 'tarde')">
+                                            <i class="fas fa-cloud-sun"></i>
+                                            <span>Durante el día</span>
+                                        </button>
+                                        <button class="option-btn" data-value="noche" onclick="selectOption(this, 3, 'noche')">
+                                            <i class="fas fa-moon"></i>
+                                            <span>Por la noche</span>
+                                        </button>
+                                        <button class="option-btn" data-value="flexible" onclick="selectOption(this, 3, 'flexible')">
+                                            <i class="fas fa-clock"></i>
+                                            <span>Flexible</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div class="question-card" data-question="4" style="display: none;">
+                            <div class="card border-0 shadow-lg">
+                                <div class="card-body p-4">
+                                    <h4 class="question-title mb-4">¿Tienes alguna restricción alimentaria?</h4>
+                                    <div class="options-grid">
+                                        <button class="option-btn" data-value="ninguna" onclick="selectOption(this, 4, 'ninguna')">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Ninguna</span>
+                                        </button>
+                                        <button class="option-btn" data-value="vegano" onclick="selectOption(this, 4, 'vegano')">
+                                            <i class="fas fa-leaf"></i>
+                                            <span>Vegano/Vegetariano</span>
+                                        </button>
+                                        <button class="option-btn" data-value="gluten" onclick="selectOption(this, 4, 'gluten')">
+                                            <i class="fas fa-bread-slice"></i>
+                                            <span>Sin gluten</span>
+                                        </button>
+                                        <button class="option-btn" data-value="lactosa" onclick="selectOption(this, 4, 'lactosa')">
+                                            <i class="fas fa-cheese"></i>
+                                            <span>Sin lactosa</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="question-card" data-question="5" style="display: none;">
+                            <div class="card border-0 shadow-lg">
+                                <div class="card-body p-4">
+                                    <h4 class="question-title mb-4">¿Cuál es tu rango de edad?</h4>
+                                    <div class="options-grid">
+                                        <button class="option-btn" data-value="18-30" onclick="selectOption(this, 5, '18-30')">
+                                            <i class="fas fa-user-graduate"></i>
+                                            <span>18-30 años</span>
+                                        </button>
+                                        <button class="option-btn" data-value="31-45" onclick="selectOption(this, 5, '31-45')">
+                                            <i class="fas fa-user-tie"></i>
+                                            <span>31-45 años</span>
+                                        </button>
+                                        <button class="option-btn" data-value="46-60" onclick="selectOption(this, 5, '46-60')">
+                                            <i class="fas fa-user"></i>
+                                            <span>46-60 años</span>
+                                        </button>
+                                        <button class="option-btn" data-value="60+" onclick="selectOption(this, 5, '60+')">
+                                            <i class="fas fa-user-clock"></i>
+                                            <span>60+ años</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 6 -->
+                        <div class="question-card" data-question="6" style="display: none;">
+                            <div class="card border-0 shadow-lg">
+                                <div class="card-body p-4">
+                                    <h4 class="question-title mb-4">¿Qué te gustaría mejorar en tu rutina diaria?</h4>
+                                    <div class="options-grid">
+                                        <button class="option-btn" data-value="concentracion" onclick="selectOption(this, 6, 'concentracion')">
+                                            <i class="fas fa-brain"></i>
+                                            <span>Concentración mental</span>
+                                        </button>
+                                        <button class="option-btn" data-value="estres" onclick="selectOption(this, 6, 'estres')">
+                                            <i class="fas fa-smile"></i>
+                                            <span>Manejo del estrés</span>
+                                        </button>
+                                        <button class="option-btn" data-value="sueno" onclick="selectOption(this, 6, 'sueno')">
+                                            <i class="fas fa-bed"></i>
+                                            <span>Calidad del sueño</span>
+                                        </button>
+                                        <button class="option-btn" data-value="rendimiento" onclick="selectOption(this, 6, 'rendimiento')">
+                                            <i class="fas fa-rocket"></i>
+                                            <span>Rendimiento físico</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="quiz-navigation mt-4">
+                            <button class="btn btn-outline-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">
+                                <i class="fas fa-arrow-left"></i> Anterior
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="quiz-results" id="quizResults" style="display: none;">
+                        <div class="card border-0 shadow-lg">
+                            <div class="card-body p-5">
+                                <div class="text-center mb-4">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                                    <h2 class="mt-3 mb-3">¡Resultados Listos!</h2>
+                                    <p class="text-muted">Basándonos en tus respuestas, estos son los productos ideales para ti:</p>
+                                </div>
+
+                                <!-- Recommended Products -->
+                                <div id="recommendedProducts" class="row g-4 mb-4">
+                                    <!-- Products will be inserted here dynamically -->
+                                </div>
+
+                                <!-- Contact Info -->
+                                <div class="alert alert-primary" role="alert">
+                                    <h5 class="alert-heading"><i class="fas fa-info-circle"></i> ¿Quieres más información?</h5>
+                                    <p class="mb-3">Nuestros asesores pueden ayudarte a elegir el producto perfecto y responder todas tus preguntas.</p>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="https://wa.me/593993161517?text=Hola,%20completé%20el%20quiz%20y%20me%20gustaría%20más%20información" 
+                                           class="btn btn-success" target="_blank">
+                                            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                                        </a>
+                                        <button class="btn btn-outline-primary" onclick="restartQuiz()">
+                                            <i class="fas fa-redo"></i> Hacer Quiz Nuevamente
+                                        </button>
+                                        <button class="btn btn-outline-secondary" onclick="shareResults()">
+                                            <i class="fas fa-share-alt"></i> Compartir Resultados
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Email Capture -->
+                                <div class="card bg-light mt-4">
+                                    <div class="card-body">
+                                        <h5 class="mb-3"><i class="fas fa-envelope"></i> Recibe tus resultados por email</h5>
+                                        <form id="resultsEmailForm" class="row g-3">
+                                            <div class="col-md-8">
+                                                <input type="email" class="form-control" id="resultEmail" placeholder="tu@email.com" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quiz JavaScript -->
+<script src="/public/js/quiz.js"></script>

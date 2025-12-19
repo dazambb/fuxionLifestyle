@@ -1,0 +1,224 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0"><%= post ? 'Editar' : 'Nuevo' %> Artículo</h4>
+    <a href="/admin/blog" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+    </a>
+</div>
+
+<div class="card card-custom">
+    <div class="card-body">
+        <form method="POST" action="<%= post ? '/admin/blog/edit/' + post.id : '/admin/blog/new' %>" id="blogForm">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Título del Artículo *</label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               value="<%= post ? post.title : '' %>" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="slug" class="form-label">Slug (URL amigable)</label>
+                        <input type="text" class="form-control" id="slug" name="slug" 
+                               value="<%= post ? post.slug : '' %>" 
+                               placeholder="Se genera automáticamente si se deja vacío">
+                        <small class="text-muted">Ej: 10-alimentos-energia</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="excerpt" class="form-label">Extracto (Resumen corto)</label>
+                        <textarea class="form-control" id="excerpt" name="excerpt" 
+                                  rows="2"><%= post ? post.excerpt : '' %></textarea>
+                        <small class="text-muted">Aparecerá en la lista de artículos</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Contenido del Artículo *</label>
+                        <textarea id="content" name="content"><%= post ? post.content : '' %></textarea>
+                        <div id="contentError" class="text-danger small mt-1" style="display: none;">
+                            El contenido del artículo es obligatorio
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="image_url" class="form-label">URL de Imagen</label>
+                        <input type="url" class="form-control" id="image_url" name="image_url" 
+                               value="<%= post ? post.image_url : '' %>">
+                        <% if (post && post.image_url) { %>
+                            <img src="<%= post.image_url %>" alt="Preview" 
+                                 class="img-fluid rounded mt-2" id="imagePreview">
+                        <% } else { %>
+                            <img src="" alt="Preview" class="img-fluid rounded mt-2 d-none" id="imagePreview">
+                        <% } %>
+                        <small class="text-muted">Imagen destacada del artículo</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="author" name="author" 
+                               value="<%= post ? post.author : 'FuXion Team' %>">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="featured" name="featured" 
+                                   <%= post && post.featured ? 'checked' : '' %>>
+                            <label class="form-check-label" for="featured">
+                                Artículo Destacado
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="published" name="published" 
+                                   <%= post && post.published ? 'checked' : '' %>>
+                            <label class="form-check-label" for="published">
+                                Publicar Artículo
+                            </label>
+                        </div>
+                        <small class="text-muted">Si está desmarcado, quedará como borrador</small>
+                    </div>
+                    
+                    <% if (post && post.published_at) { %>
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <strong>Publicado:</strong><br>
+                                <%= new Date(post.published_at).toLocaleString('es-ES') %>
+                            </small>
+                        </div>
+                    <% } %>
+                    
+                    <% if (post) { %>
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <strong>Vistas:</strong> <%= post.views %><br>
+                                <strong>Creado:</strong> <%= new Date(post.created_at).toLocaleDateString('es-ES') %>
+                            </small>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i> Guardar
+                </button>
+                <a href="/admin/blog" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- TinyMCE Script -->
+<script src="https://cdn.tiny.cloud/1/lfz31z836o380lvbv17i8wqum7s97ilbowetytxmkh7ohaut/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    // Inicializar TinyMCE
+    tinymce.init({
+        selector: '#content',
+        height: 500,
+        language: 'es',
+        menubar: true,
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'help', 'wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic underline strikethrough | ' +
+                 'forecolor backcolor | alignleft aligncenter alignright alignjustify | ' +
+                 'bullist numlist outdent indent | link image media | ' +
+                 'removeformat code fullscreen | help',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 14px; line-height: 1.6; }',
+        toolbar_mode: 'sliding',
+        contextmenu: 'link image table',
+        image_advtab: true,
+        image_caption: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote',
+        branding: false,
+        promotion: false,
+        images_upload_handler: function (blobInfo, success, failure) {
+            failure('Por favor, usa el botón de imagen e ingresa la URL');
+        },
+        setup: function(editor) {
+            editor.on('init', function() {
+                // Editor está listo
+                console.log('TinyMCE inicializado correctamente');
+            });
+        }
+    });
+
+    // Validación del formulario
+    document.getElementById('blogForm').addEventListener('submit', function(e) {
+        // Sincronizar contenido de TinyMCE con el textarea
+        tinymce.triggerSave();
+        
+        // Obtener el contenido
+        const content = tinymce.get('content').getContent();
+        const contentError = document.getElementById('contentError');
+        
+        // Validar que tenga contenido (sin contar tags HTML vacíos)
+        const textContent = content.replace(/<[^>]*>/g, '').trim();
+        
+        if (!textContent) {
+            e.preventDefault();
+            contentError.style.display = 'block';
+            
+            // Scroll al editor
+            tinymce.get('content').focus();
+            
+            Swal.fire({
+                icon: 'warning',
+                title: 'Contenido requerido',
+                text: 'Por favor, escribe el contenido del artículo',
+                confirmButtonColor: '#E31837'
+            });
+            
+            return false;
+        }
+        
+        contentError.style.display = 'none';
+        return true;
+    });
+
+    // Preview de imagen
+    document.getElementById('image_url').addEventListener('input', function(e) {
+        const preview = document.getElementById('imagePreview');
+        if (e.target.value) {
+            preview.src = e.target.value;
+            preview.classList.remove('d-none');
+        } else {
+            preview.classList.add('d-none');
+        }
+    });
+    
+    // Auto-generar slug
+    document.getElementById('title').addEventListener('input', function(e) {
+        const slugInput = document.getElementById('slug');
+        if (!slugInput.value || slugInput.dataset.auto !== 'false') {
+            const slug = e.target.value
+                .toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/--+/g, '-');
+            slugInput.value = slug;
+        }
+    });
+    
+    document.getElementById('slug').addEventListener('input', function() {
+        this.dataset.auto = 'false';
+    });
+</script>
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remover acentos
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/--+/g, '-');
+            slugInput.value = slug;
+        }
+    });
+    
+    document.getElementById('slug').addEventListener('input', function() {
+        this.dataset.auto = 'false';
+    });
+</script>

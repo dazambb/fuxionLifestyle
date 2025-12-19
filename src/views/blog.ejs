@@ -1,0 +1,161 @@
+<!-- Page Header -->
+<section class="blog-header py-5" style="background: linear-gradient(135deg, #4A7C59 0%, #2C5530 50%, #1a1a1a 100%); position: relative; overflow: hidden; margin-top: 76px; min-height: 350px; display: flex; align-items: center;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(74, 124, 89, 0.2) 0%, transparent 50%); pointer-events: none;"></div>
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="text-center text-white" data-aos="fade-up">
+            <div class="mb-3">
+                <i class="fas fa-newspaper" style="font-size: 4rem; opacity: 0.9;"></i>
+            </div>
+            <h1 class="display-4 fw-bold mb-3">Blog de Salud y Bienestar</h1>
+            <p class="lead mb-0">Consejos, noticias y todo sobre vida saludable con FuXion</p>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Posts -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <% if (posts && posts.length > 0) { %>
+                <% posts.forEach((post, index) => { 
+                    const postDate = new Date(post.created_at);
+                    const formattedDate = postDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+                %>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<%= (index % 3) * 100 %>">
+                        <article class="blog-card-modern h-100">
+                            <div class="blog-card-image">
+                                <img src="<%= post.image_url %>" alt="<%= post.title %>">
+                                <div class="blog-card-overlay">
+                                    <span class="blog-badge"><i class="fas fa-book-open me-1"></i> Leer Artículo</span>
+                                </div>
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <span class="blog-date-badge">
+                                        <i class="far fa-calendar-alt me-1"></i> <%= formattedDate %>
+                                    </span>
+                                </div>
+                                <h5 class="blog-card-title"><%= post.title %></h5>
+                                <p class="blog-card-excerpt"><%= post.excerpt %></p>
+                                <a href="/blog/<%= post.id %>" class="blog-read-more">
+                                    Leer más <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
+                    <h3 class="text-muted">No hay artículos publicados</h3>
+                    <p class="text-muted">Publica contenido desde el panel administrativo.</p>
+                </div>
+            <% } %>
+        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section py-5">
+    <div class="container">
+        <div class="newsletter-card" data-aos="fade-up">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="newsletter-icon mb-3">
+                        <i class="fas fa-envelope-open-text"></i>
+                    </div>
+                    <h2 class="newsletter-title">Suscríbete a Nuestro Newsletter</h2>
+                    <p class="newsletter-text">
+                        Recibe artículos exclusivos, consejos de salud y ofertas especiales directamente en tu correo.
+                    </p>
+                    <div class="newsletter-features">
+                        <span><i class="fas fa-check-circle text-success me-2"></i>Contenido exclusivo</span>
+                        <span><i class="fas fa-check-circle text-success me-2"></i>Tips de salud</span>
+                        <span><i class="fas fa-check-circle text-success me-2"></i>Ofertas especiales</span>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <form id="newsletterForm" class="newsletter-form">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-white">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" id="newsletterEmail" name="email" placeholder="tu@email.com" required>
+                            <button class="btn btn-primary px-4" type="submit" id="newsletterBtn">
+                                Suscribirse <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-lock me-1"></i> No compartiremos tu información
+                        </small>
+                    </form>
+                    
+                    <script>
+                    document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const btn = document.getElementById('newsletterBtn');
+                        const emailInput = document.getElementById('newsletterEmail');
+                        const originalText = btn.innerHTML;
+                        
+                        btn.disabled = true;
+                        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Suscribiendo...';
+                        
+                        try {
+                            const response = await fetch('/api/newsletter', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ email: emailInput.value })
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (data.success) {
+                                btn.innerHTML = '<i class="fas fa-check me-2"></i> ¡Suscrito!';
+                                btn.classList.remove('btn-primary');
+                                btn.classList.add('btn-success');
+                                emailInput.value = '';
+                                
+                                alert('¡Gracias por suscribirte! Te enviaremos contenido exclusivo.');
+                                
+                                setTimeout(() => {
+                                    btn.innerHTML = originalText;
+                                    btn.classList.remove('btn-success');
+                                    btn.classList.add('btn-primary');
+                                    btn.disabled = false;
+                                }, 3000);
+                            } else {
+                                throw new Error(data.error);
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Error al suscribirse. Por favor, inténtalo de nuevo.');
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        }
+                    });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="text-center cta-content" data-aos="fade-up">
+            <h2 class="display-4 fw-bold mb-3">¿Listo para Mejorar tu Salud?</h2>
+            <p class="fs-5 mb-4">Descubre nuestros productos y comienza tu transformación hoy</p>
+            <a href="/productos" class="btn btn-light btn-lg">
+                <i class="fas fa-shopping-bag"></i> Ver Productos
+            </a>
+        </div>
+    </div>
+</section>

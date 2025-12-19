@@ -1,0 +1,270 @@
+<!-- Page Header -->
+<section class="contact-header py-5" style="background: linear-gradient(135deg, #4A7C59 0%, #2C5530 50%, #1a1a1a 100%); position: relative; overflow: hidden; margin-top: 76px; min-height: 300px; display: flex; align-items: center;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(74, 124, 89, 0.2) 0%, transparent 50%); pointer-events: none;"></div>
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="text-center text-white" data-aos="fade-up">
+            <div class="mb-3">
+                <i class="fas fa-envelope-open-text" style="font-size: 4rem; opacity: 0.9;"></i>
+            </div>
+            <h1 class="display-4 fw-bold mb-3">Contáctanos</h1>
+            <p class="lead mb-4">Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos pronto</p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="tel:+593993161517" class="btn btn-light btn-sm">
+                    <i class="fas fa-phone me-2"></i>+593 99 316 1517
+                </a>
+                <a href="https://wa.me/593993161517" target="_blank" class="btn btn-success btn-sm">
+                    <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="contact-form-card">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon-circle me-3">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-1">Envíanos un Mensaje</h2>
+                            <p class="text-muted mb-0">Te responderemos en menos de 24 horas</p>
+                        </div>
+                    </div>
+                    
+                    <form id="contactForm" class="contact-form-modern">
+                        <div class="mb-4">
+                            <label for="name" class="form-label fw-bold">
+                                <i class="fas fa-user text-primary me-2"></i>Nombre Completo *
+                            </label>
+                            <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Tu nombre completo" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="email" class="form-label fw-bold">
+                                    <i class="fas fa-envelope text-primary me-2"></i>Email *
+                                </label>
+                                <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="tu@email.com" required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <label for="phone" class="form-label fw-bold">
+                                    <i class="fab fa-whatsapp text-success me-2"></i>WhatsApp *
+                                </label>
+                                <input type="tel" class="form-control form-control-lg" id="phone" name="phone" placeholder="099 999 9999" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="message" class="form-label fw-bold">
+                                <i class="fas fa-comment-dots text-primary me-2"></i>Mensaje *
+                            </label>
+                            <textarea class="form-control form-control-lg" id="message" name="message" rows="6" placeholder="Cuéntanos cómo podemos ayudarte..." required></textarea>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg py-3" id="submitBtn">
+                                <i class="fas fa-paper-plane me-2"></i> Enviar Mensaje
+                            </button>
+                        </div>
+                        
+                        <p class="text-center text-muted mt-3 mb-0">
+                            <small><i class="fas fa-shield-alt me-1"></i> Tu información está segura con nosotros</small>
+                        </p>
+                    </form>
+                    
+                    <script>
+                    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const submitBtn = document.getElementById('submitBtn');
+                        const originalText = submitBtn.innerHTML;
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Enviando...';
+                        
+                        const formData = {
+                            name: document.getElementById('name').value,
+                            email: document.getElementById('email').value,
+                            phone: document.getElementById('phone').value,
+                            message: document.getElementById('message').value
+                        };
+                        
+                        try {
+                            const response = await fetch('/api/contact', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(formData)
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (data.success) {
+                                // Mostrar mensaje de éxito
+                                submitBtn.innerHTML = '<i class="fas fa-check me-2"></i> ¡Enviado!';
+                                submitBtn.classList.remove('btn-primary');
+                                submitBtn.classList.add('btn-success');
+                                
+                                // Limpiar formulario
+                                document.getElementById('contactForm').reset();
+                                
+                                // Mostrar alerta de éxito
+                                alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+                                
+                                // Restaurar botón después de 3 segundos
+                                setTimeout(() => {
+                                    submitBtn.innerHTML = originalText;
+                                    submitBtn.classList.remove('btn-success');
+                                    submitBtn.classList.add('btn-primary');
+                                    submitBtn.disabled = false;
+                                }, 3000);
+                            } else {
+                                throw new Error(data.error || 'Error al enviar');
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.');
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }
+                    });
+                    </script>
+                </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="contact-info-section">
+                    <h2 class="mb-4">Otras Formas de Contacto</h2>
+                    
+                    <div class="contact-info-card mb-3">
+                        <div class="contact-info-icon bg-primary">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5 class="mb-1">Teléfono</h5>
+                            <p class="mb-1"><strong>+593 99 316 1517</strong></p>
+                            <small class="text-muted">Lun - Sáb: 9:00 AM - 8:00 PM</small>
+                        </div>
+                        <a href="tel:+593993161517" class="contact-info-action">
+                            <i class="fas fa-phone-alt"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-info-card mb-3">
+                        <div class="contact-info-icon bg-danger">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5 class="mb-1">Email</h5>
+                            <p class="mb-1"><strong>contacto@fuxionlifestyle.com</strong></p>
+                            <small class="text-muted">Respuesta en 24 horas</small>
+                        </div>
+                        <a href="mailto:contacto@fuxionlifestyle.com" class="contact-info-action">
+                            <i class="fas fa-envelope-open"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-info-card mb-3 border-success">
+                        <div class="contact-info-icon bg-success">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5 class="mb-1">WhatsApp</h5>
+                            <p class="mb-1"><strong>+593 99 316 1517</strong></p>
+                            <small class="text-muted">Respuesta inmediata</small>
+                        </div>
+                        <a href="https://wa.me/593993161517?text=Hola,%20necesito%20información" target="_blank" class="contact-info-action bg-success">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="contact-info-card mb-4">
+                        <div class="contact-info-icon bg-warning">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h5 class="mb-1">Ubicación</h5>
+                            <p class="mb-1"><strong>Ecuador</strong></p>
+                            <small class="text-muted">Envíos a todo el país</small>
+                        </div>
+                    </div>
+                    
+                    <div class="social-section mt-5">
+                        <h5 class="mb-3"><i class="fas fa-share-alt me-2"></i>Síguenos</h5>
+                        <div class="social-buttons-modern">
+                            <a href="#" target="_blank" class="social-btn social-facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a href="#" target="_blank" class="social-btn social-instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a href="#" target="_blank" class="social-btn social-tiktok">
+                                <i class="fab fa-tiktok"></i>
+                                <span>TikTok</span>
+                            </a>
+                            <a href="#" target="_blank" class="social-btn social-youtube">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section (Optional) -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center" data-aos="fade-up">
+            <h2 class="section-title mb-4">Horarios de Atención</h2>
+            <div class="row g-4 mt-4">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="far fa-clock fa-3x text-primary mb-3"></i>
+                            <h5>Lunes a Viernes</h5>
+                            <p class="text-muted mb-0">9:00 AM - 8:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="far fa-clock fa-3x text-primary mb-3"></i>
+                            <h5>Sábados</h5>
+                            <p class="text-muted mb-0">10:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="text-center cta-content" data-aos="fade-up">
+            <h2 class="display-4 fw-bold mb-3">¿Prefieres Llamar?</h2>
+            <p class="fs-5 mb-4">Estamos disponibles para atenderte</p>
+            <a href="tel:+51999999999" class="btn btn-light btn-lg me-2 mb-2">
+                <i class="fas fa-phone"></i> Llamar Ahora
+            </a>
+            <a href="https://wa.me/51999999999?text=Hola,%20necesito%20información" 
+               class="btn btn-outline-light btn-lg mb-2" 
+               target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+        </div>
+    </div>
+</section>

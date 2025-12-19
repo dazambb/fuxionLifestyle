@@ -1,0 +1,330 @@
+<!-- Page Header -->
+<section class="products-hero" style="background: linear-gradient(135deg, #4A7C59 0%, #2C5530 50%, #1a1a1a 100%); position: relative; overflow: hidden; margin-top: 76px;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(74, 124, 89, 0.2) 0%, transparent 50%); pointer-events: none;"></div>
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="text-center text-white py-5" data-aos="fade-up">
+            <span class="badge bg-light text-primary px-3 py-2 mb-3" style="font-size: 0.9rem;">
+                <i class="fas fa-leaf"></i> 100% Natural
+            </span>
+            <h1 class="display-4 fw-bold mb-3">Catálogo de Productos FuXion</h1>
+            <p class="lead mb-4">Transforma tu salud con productos científicamente probados</p>
+            <div class="d-flex justify-content-center gap-4 flex-wrap">
+                <div class="text-white">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <span>Certificados internacionales</span>
+                </div>
+                <div class="text-white">
+                    <i class="fas fa-truck me-2"></i>
+                    <span>Envío a todo el país</span>
+                </div>
+                <div class="text-white">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    <span>Garantía de autenticidad</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="py-5">
+    <div class="container">
+        <!-- Search and Sort Bar -->
+        <div class="row mb-4" data-aos="fade-up">
+            <div class="col-lg-8 mx-auto">
+                <div class="search-wrapper">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" id="productSearch" class="form-control border-start-0" placeholder="Buscar productos por nombre o descripción..." onkeyup="searchProducts()">
+                        <button class="btn btn-primary" type="button" onclick="clearSearch()">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                    <div class="search-results-info mt-2 text-center">
+                        <small class="text-muted">
+                            <span id="resultsCount"></span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- View Options and Sort -->
+        <div class="row mb-4" data-aos="fade-up">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div class="view-options">
+                        <button class="btn btn-outline-primary active" id="gridView" onclick="setView('grid')">
+                            <i class="fas fa-th"></i> Grid
+                        </button>
+                        <button class="btn btn-outline-primary" id="listView" onclick="setView('list')">
+                            <i class="fas fa-list"></i> Lista
+                        </button>
+                    </div>
+                    <div class="sort-options">
+                        <select class="form-select" id="sortProducts" onchange="sortProducts()">
+                            <option value="default">Ordenar por...</option>
+                            <option value="name-asc">Nombre (A-Z)</option>
+                            <option value="name-desc">Nombre (Z-A)</option>
+                            <option value="newest">Más nuevos</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter Buttons -->
+        <div class="text-center filter-buttons-v2 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <button class="filter-btn-v2 active" onclick="filterProducts('all')" data-category="all">
+                <i class="fas fa-th-large"></i>
+                <span>Todos</span>
+                <span class="filter-count" id="count-all"></span>
+            </button>
+            <button class="filter-btn-v2" onclick="filterProducts('energia')" data-category="energia">
+                <i class="fas fa-bolt"></i>
+                <span>Energía</span>
+                <span class="filter-count" id="count-energia"></span>
+            </button>
+            <button class="filter-btn-v2" onclick="filterProducts('defensas')" data-category="defensas">
+                <i class="fas fa-shield-virus"></i>
+                <span>Defensas</span>
+                <span class="filter-count" id="count-defensas"></span>
+            </button>
+            <button class="filter-btn-v2" onclick="filterProducts('peso')" data-category="peso">
+                <i class="fas fa-weight"></i>
+                <span>Control de Peso</span>
+                <span class="filter-count" id="count-peso"></span>
+            </button>
+            <button class="filter-btn-v2" onclick="filterProducts('digestion')" data-category="digestion">
+                <i class="fas fa-heartbeat"></i>
+                <span>Digestión</span>
+                <span class="filter-count" id="count-digestion"></span>
+            </button>
+            <button class="filter-btn-v2" onclick="filterProducts('deportes')" data-category="deportes">
+                <i class="fas fa-running"></i>
+                <span>Deportes</span>
+                <span class="filter-count" id="count-deportes"></span>
+            </button>
+            <button class="filter-btn-v2" onclick="filterProducts('belleza')" data-category="belleza">
+                <i class="fas fa-spa"></i>
+                <span>Belleza</span>
+                <span class="filter-count" id="count-belleza"></span>
+            </button>
+        </div>
+        
+        <!-- Natural Products Badge -->
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="natural-badge-global">
+                <i class="fas fa-leaf"></i>
+                <span>Todos nuestros productos son <strong>100% naturales</strong> y certificados internacionalmente</span>
+                <i class="fas fa-certificate"></i>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="row g-4" id="productsGrid">
+            <% if (products && products.length > 0) { %>
+                <% products.forEach((product, index) => { %>
+                    <div class="col-lg-4 col-md-6 product-item" data-category="<%= product.category %>" data-name="<%= product.name.toLowerCase() %>" data-aos="fade-up" data-aos-delay="<%= (index % 3) * 100 %>">
+                        <div class="product-card-v3">
+                            <div class="product-image-container">
+                                <img src="<%= product.image_url %>" alt="<%= product.name %>" class="product-image">
+                                <div class="product-overlay">
+                                    <button class="btn btn-white btn-sm" onclick="quickView('<%= product.name %>', '<%= product.description %>', '<%= product.image_url %>')" title="Vista rápida">
+                                        <i class="fas fa-eye"></i> Vista Rápida
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-category-tag text-capitalize">
+                                    <i class="fas fa-tag me-1"></i><%= product.category %>
+                                </span>
+                                <h5 class="product-title"><%= product.name %></h5>
+                                <div class="product-rating mb-3">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span class="rating-text">(5.0)</span>
+                                </div>
+                                
+                                <!-- Hidden Description -->
+                                <div class="product-description-wrapper">
+                                    <p class="product-desc collapsed"><%= product.description %></p>
+                                    <button class="btn-read-more" onclick="toggleDescription(this)">
+                                        <i class="fas fa-chevron-down"></i> Ver más
+                                    </button>
+                                </div>
+                                
+                                <div class="product-actions">
+                                    <a href="#" onclick="buyProduct('<%= product.name %>')" class="btn btn-primary-v3">
+                                        <i class="fas fa-shopping-cart"></i> Comprar
+                                    </a>
+                                    <button onclick="contactAboutProduct('<%= product.name %>')" class="btn btn-outline-primary-v3">
+                                        <i class="fas fa-info-circle"></i> Más info
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="col-12 text-center py-5" id="noProductsMessage">
+                    <div class="empty-state">
+                        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                        <h3 class="text-muted">No hay productos disponibles</h3>
+                        <p class="text-muted">Agrega productos desde el panel administrativo.</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        
+        <!-- No Results Message -->
+        <div class="row d-none" id="noResultsMessage">
+            <div class="col-12 text-center py-5">
+                <div class="empty-state">
+                    <i class="fas fa-search fa-4x text-muted mb-3"></i>
+                    <h3 class="text-muted">No se encontraron productos</h3>
+                    <p class="text-muted">Intenta con otros términos de búsqueda o filtros</p>
+                    <button class="btn btn-primary mt-3" onclick="clearSearch()">
+                        <i class="fas fa-redo me-2"></i>Ver todos los productos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick View Modal -->
+<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="quickViewImage" src="" alt="" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <span class="badge bg-success mb-2">100% Natural</span>
+                        <h3 id="quickViewName" class="mb-3"></h3>
+                        <div class="product-rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="rating-text ms-2">(5.0) - Excelente</span>
+                        </div>
+                        <p id="quickViewDescription" class="text-muted mb-4"></p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" onclick="buyProductFromModal()">
+                                <i class="fas fa-shopping-cart me-2"></i>Comprar Ahora
+                            </button>
+                            <button class="btn btn-outline-success btn-lg" onclick="contactWhatsApp()">
+                                <i class="fab fa-whatsapp me-2"></i>Consultar por WhatsApp
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h6 class="fw-bold mb-3">Beneficios:</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Ingredientes 100% naturales</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Certificación internacional</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Envío a todo el país</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Asesoría personalizada</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="section-title">¿Cómo Funciona la Compra?</h2>
+            <p class="section-subtitle">Tu seguridad es nuestra prioridad</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="info-card-v2">
+                    <div class="info-icon-wrapper info-icon-primary">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <h5 class="info-title">1. Elige tu Producto</h5>
+                    <p class="text-muted">Explora nuestro catálogo y selecciona el producto ideal para ti</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="info-card-v2">
+                    <div class="info-icon-wrapper info-icon-success">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <h5 class="info-title">2. Compra Oficial</h5>
+                    <p class="text-muted">Serás redirigido al sitio oficial de FuXion con mi código incluido</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="info-card-v2">
+                    <div class="info-icon-wrapper info-icon-info">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h5 class="info-title">3. Asesoría Gratis</h5>
+                    <p class="text-muted">Recibe soporte personalizado antes y después de tu compra</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="info-card-v2">
+                    <div class="info-icon-wrapper info-icon-warning">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h5 class="info-title">4. Recibe en Casa</h5>
+                    <p class="text-muted">Envío seguro a todo el país directamente en tu domicilio</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-lg-10 mx-auto">
+                <div class="guarantee-box" data-aos="fade-up">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="mb-3"><i class="fas fa-certificate text-primary me-2"></i>Garantía de Autenticidad</h4>
+                            <p class="mb-0">Todos nuestros productos son 100% originales y vienen directamente de FuXion. Al comprar a través de mi código de distribuidor, obtienes productos certificados con garantía oficial más mi asesoría personalizada sin costo adicional.</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <img src="https://images.unsplash.com/photo-1556742111-a301076d9d18?w=300" alt="Certificado" class="img-fluid rounded" style="max-height: 150px; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="text-center cta-content" data-aos="fade-up">
+            <h2 class="display-4 fw-bold mb-3">¿Necesitas Ayuda?</h2>
+            <p class="fs-5 mb-4">Contáctame por WhatsApp para asesorarte en tu compra</p>
+            <a href="https://wa.me/51999999999?text=Hola,%20necesito%20ayuda%20con%20los%20productos%20FuXion" 
+               class="btn btn-light btn-lg" 
+               target="_blank">
+                <i class="fab fa-whatsapp"></i> Chatear por WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
